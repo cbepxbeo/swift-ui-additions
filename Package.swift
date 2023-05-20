@@ -10,10 +10,14 @@ let package = Package(
             name: "SwiftUIAdditions",
             targets: ["SwiftUIAdditions"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/cbepxbeo/swift-ui-extensions.git", branch: "main")
+    ],
     targets: [
         .target(
             name: "SwiftUIAdditions",
             dependencies: [
+                .product(name: "SwiftUIExtension", package: "swift-ui-extensions")
             ],
             path: "Sources"
         ),
