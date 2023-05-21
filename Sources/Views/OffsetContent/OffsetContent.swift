@@ -10,6 +10,7 @@
  */
 
 import SwiftUI
+import SwiftUtilities
 
 public protocol OffsetContentStyle {
     var blurEffect: CGFloat? { get set }
@@ -24,6 +25,21 @@ public protocol OffsetContentStyle {
     var hideAnimation: Animation? { get set }
     var showAnimation: Animation? { get set }
 }
+
+extension OffsetContentStyle {
+    public var blurEffect: CGFloat? { 3 }
+    public var offsetContent: CGFloat? { nil }
+    public var automaticOffset: (offset: CGFloat, value: Bool) { (-50, true) }
+    public var scaleEffect: CGFloat? { 0.8 }
+    public var beforeShowBackgroundColor: Color? { .gray }
+    public var afterShowBackgroundColor: Color? { .black }
+    public var overlayColor: Color? { .black }
+    public var opacityOverlayColor: CGFloat? { 0.4 }
+    public var animationBackgroundColor: Animation? { .easeOut(duration: 0.8) }
+    public var hideAnimation: Animation? { .spring() }
+    public var showAnimation: Animation? { .spring() }
+}
+
 
 public struct OffsetContentStyleDefault: OffsetContentStyle {
     public var blurEffect: CGFloat?
@@ -40,31 +56,49 @@ public struct OffsetContentStyleDefault: OffsetContentStyle {
 }
 
 public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
+    typealias MainContentWithAllParameters = (_ show: Binding<Bool>, _ offset: CGFloat) -> MainContent
+    typealias MainContentWithShowParameter = (_ show: Binding<Bool>) -> MainContent
+    typealias OffsetContentWithAllParameters = (_ show: Binding<Bool>, _ offset: CGFloat) -> OffsetContent
+    typealias OffsetContentWithShowParameter = (_ show: Binding<Bool>) -> OffsetContent
+    typealias OffsetContentWithOffsetParameter = ( _ offset: CGFloat) -> OffsetContent
+    typealias OffsetContentWithoutParameters = () -> OffsetContent
+    
+    internal init(
+        mainContentWithAllParameters: UniversalWrap<MainContentWithAllParameters>? = nil,
+        mainContentWithShowParameter: UniversalWrap<MainContentWithShowParameter>? = nil,
+        offsetContentWithAllParameters: UniversalWrap<OffsetContentWithAllParameters>? = nil,
+        offsetContentWithShowParameter: UniversalWrap<OffsetContentWithShowParameter>? = nil,
+        offsetContentWithOffsetParameter: UniversalWrap<OffsetContentWithOffsetParameter>? = nil,
+        offsetContentWithoutParameters: UniversalWrap<OffsetContentWithoutParameters>? = nil,
+        mainContentOption:  Self.MainContentOption,
+        offsetContentOption: Self.OffsetContentOption
+    ){
+        
+        self.mainContentOption = mainContentOption
+        self.offsetContentOption = offsetContentOption
+        self.style = OffsetContentStyleDefault()
+        self._viewModel = .init(initialValue: .init(style: OffsetContentStyleDefault()))
+        
+        self.mainContentWithAllParameters = mainContentWithAllParameters?.value ?? nil
+        self.mainContentWithShowParameter = mainContentWithShowParameter?.value ?? nil
+        self.offsetContentWithoutParameters = offsetContentWithoutParameters?.value ?? nil
+        self.offsetContentWithAllParameters = offsetContentWithAllParameters?.value ?? nil
+        self.offsetContentWithShowParameter = offsetContentWithShowParameter?.value ?? nil
+        self.offsetContentWithOffsetParameter = offsetContentWithOffsetParameter?.value ?? nil
+        
+    }
+    
     @ObservedObject var viewModel: OffsetContentViewModel
-    internal let mainContentWithAllParameters: ((_ show: Binding<Bool>, _ offset: CGFloat) -> MainContent)?
-    internal let mainContentWithShowParameter: ((_ show: Binding<Bool>) -> MainContent)?
-    internal let offsetContentWithAllParameters: ((_ show: Binding<Bool>, _ offset: CGFloat) -> OffsetContent)?
-    internal let offsetContentWithShowParameter: ((_ show: Binding<Bool>) -> OffsetContent)?
-    internal let offsetContentWithOffsetParameter: ((_ offset: CGFloat) -> OffsetContent)?
-    internal let offsetContentWithoutParameters: (() -> OffsetContent)?
+    internal let mainContentWithAllParameters: MainContentWithAllParameters?
+    internal let mainContentWithShowParameter: MainContentWithShowParameter?
+    internal let offsetContentWithAllParameters: OffsetContentWithAllParameters?
+    internal let offsetContentWithShowParameter: OffsetContentWithShowParameter?
+    internal let offsetContentWithOffsetParameter: OffsetContentWithOffsetParameter?
+    internal let offsetContentWithoutParameters: OffsetContentWithoutParameters?
     internal let mainContentOption: Self.MainContentOption
     internal let offsetContentOption: Self.OffsetContentOption
     internal let style: OffsetContentStyle
 
-    public init(
-        @ViewBuilder mainContent: @escaping (_ show: Binding<Bool>) -> MainContent,
-        @ViewBuilder offsetContent: @escaping () -> OffsetContent) {
-            self.mainContentOption = .withShow
-            self.offsetContentOption = .without
-            self._viewModel = .init(initialValue: .init(style: OffsetContentStyleDefault()))
-            self.offsetContentWithoutParameters = offsetContent
-            self.mainContentWithShowParameter = mainContent
-            self.mainContentWithAllParameters = nil
-            self.offsetContentWithAllParameters = nil
-            self.offsetContentWithShowParameter = nil
-            self.offsetContentWithOffsetParameter = nil
-            self.style = OffsetContentStyleDefault()
-    }
     
     public func blurEffect(radius: CGFloat?) -> Self {
         self.viewModel.style.blurEffect = radius
@@ -117,6 +151,25 @@ public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
     public func showAnimation(_ animation: Animation? = .default) -> Self {
         self.viewModel.style.showAnimation = animation
         return self
+    }
+    
+    public func style(_ style: OffsetContentStyle) -> Self {
+        self.viewModel.style = style
+        return self
+    }
+    
+}
+
+extension OffsetContent {
+    public init(
+        @ViewBuilder mainContent: @escaping (_ show: Binding<Bool>) -> MainContent,
+        @ViewBuilder offsetContent: @escaping () -> OffsetContent) {
+            self.init(
+                mainContentWithShowParameter: .init(mainContent),
+                offsetContentWithoutParameters: .init(offsetContent),
+                mainContentOption: .withShow,
+                offsetContentOption: .without
+            )
     }
 }
 
