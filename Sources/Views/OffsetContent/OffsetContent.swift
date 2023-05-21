@@ -23,8 +23,7 @@ public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
         mainContentOption:  Self.MainContentOption,
         offsetContentOption: Self.OffsetContentOption
     ){
-
-        self._viewModel = .init(initialValue: OffsetContentViewModel(style: Self.DefaultStyle()))
+        self._viewModel = .init(initialValue: .init())
         self.mainContentOption = mainContentOption
         self.offsetContentOption = offsetContentOption
         self.mainContentWithAllParameters = mainContentWithAllParameters?.value ?? nil
