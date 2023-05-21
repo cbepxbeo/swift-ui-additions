@@ -65,5 +65,34 @@ extension OffsetContentViewModel {
 }
 
 extension OffsetContentViewModel {
-    var percentFromOffset: CGFloat {0}
+    var percent: CGFloat  {
+        height / 100
+    }
+    
+    var percentFromOffset: CGFloat {
+        if height != .zero {
+            return (height - self.offset) / percent
+        }
+        return 0
+    }
+    
+    var blur: CGFloat {
+        self.getFromCurrentOffset(max: 20)
+    }
+    
+    var opacity: CGFloat {
+        self.getFromCurrentOffset(max: 0.4)
+    }
+    
+    var degrees: CGFloat {
+        self.getFromCurrentOffset(max: 15)
+    }
+    
+    var offsetContent: CGFloat {
+        self.getFromCurrentOffset(max: height - 50)
+    }
+    
+    var scaleEffect: CGFloat {
+        1 - self.getFromCurrentOffset(max: 0.2)
+    }
 }
