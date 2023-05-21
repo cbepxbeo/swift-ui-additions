@@ -53,3 +53,17 @@ extension OffsetContentViewModel {
         }
     }
 }
+
+extension OffsetContentViewModel {
+    
+    func getFromCurrentOffset(max: CGFloat) -> CGFloat{
+        if !self.showOffsetContent {
+            return 0
+        }
+        return (max / 100) * self.percentFromOffset
+    }
+}
+
+extension OffsetContentViewModel {
+    var percentFromOffset: CGFloat {0}
+}
