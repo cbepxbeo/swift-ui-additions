@@ -17,6 +17,10 @@ internal final class OffsetContentViewModel: ObservableObject {
     internal var isReady: Bool = false
     internal var showOffsetContent: Bool = false
     internal var offset: CGFloat = 0
+    internal var style: OffsetContentStyle
+    init(style: OffsetContentStyle){
+        self.style = style
+    }
 }
  
 
@@ -30,7 +34,7 @@ extension OffsetContentViewModel {
         if currentOffset > height - (height / 4)   {
             self.offset = 0
             self.showOffsetContent = false
-            self.render(.spring())
+            self.render(self.style.hideAnimation)
             return
         }
         self.offset = currentOffset
@@ -49,7 +53,7 @@ extension OffsetContentViewModel {
         } else {
             self.offset = 0
             self.showOffsetContent = false
-            self.render(.spring())
+            self.render(self.style.hideAnimation)
         }
     }
 }
@@ -77,11 +81,19 @@ extension OffsetContentViewModel {
     }
     
     var blur: CGFloat {
-        self.getFromCurrentOffset(max: 20)
+        guard let blur = self.style.blurEffect else {
+            return 0
+        }
+        return self.getFromCurrentOffset(max: blur)
     }
     
     var opacity: CGFloat {
-        self.getFromCurrentOffset(max: 0.4)
+        guard let opacity = self.style.opacityOverlayColor else {
+            return 0.001
+        }
+        return self.getFromCurrentOffset(
+            max: opacity > 1 ? 1 : (opacity < 0 || opacity == 0) ? 0.001 : opacity
+        )
     }
     
     var degrees: CGFloat {
@@ -89,10 +101,51 @@ extension OffsetContentViewModel {
     }
     
     var offsetContent: CGFloat {
-        self.getFromCurrentOffset(max: height - 50)
+        if self.style.automaticOffset.value {
+            return self.getFromCurrentOffset(max: height + self.style.automaticOffset.offset)
+        }
+        
+        guard let offset = self.style.offsetContent else {
+            return 0
+        }
+        return self.getFromCurrentOffset(max: offset)
     }
     
     var scaleEffect: CGFloat {
-        1 - self.getFromCurrentOffset(max: 0.2)
+        guard let scaleEffect = self.style.scaleEffect, scaleEffect > 0 else {
+            return 1
+        }
+        
+        if scaleEffect > 1 {
+            return 1 + self.getFromCurrentOffset(max: scaleEffect - 1)
+            
+        } else {
+            return 1 - self.getFromCurrentOffset(max: 1 - scaleEffect)
+        }
     }
+    
+    
+    var beforeShowBackgroundColor: Color {
+        self.style.beforeShowBackgroundColor ?? .black
+    }
+    var afterShowBackgroundColor: Color {
+        self.style.afterShowBackgroundColor ?? .black
+    }
+    var overlayColor: Color {
+        self.style.overlayColor ?? .black
+    }
+    
+    var animationBackgroundColor: Animation? {
+        self.style.animationBackgroundColor
+    }
+    
+    
+    var hideAnimation: Animation? {
+        self.style.hideAnimation
+    }
+    
+    var showAnimation: Animation? {
+        self.style.showAnimation
+    }
+    
 }

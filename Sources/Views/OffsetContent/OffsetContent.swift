@@ -11,9 +11,33 @@
 
 import SwiftUI
 
-public protocol OffsetContentStyle {}
+public protocol OffsetContentStyle {
+    var blurEffect: CGFloat? { get set }
+    var offsetContent: CGFloat? { get set }
+    var automaticOffset: (offset: CGFloat, value: Bool) { get set }
+    var scaleEffect: CGFloat? { get set }
+    var beforeShowBackgroundColor: Color? { get set }
+    var afterShowBackgroundColor: Color? { get set }
+    var overlayColor: Color? { get set }
+    var opacityOverlayColor: CGFloat? { get set }
+    var animationBackgroundColor: Animation? { get set }
+    var hideAnimation: Animation? { get set }
+    var showAnimation: Animation? { get set }
+}
 
-public struct OffsetContentStyleDefault: OffsetContentStyle {}
+public struct OffsetContentStyleDefault: OffsetContentStyle {
+    public var blurEffect: CGFloat?
+    public var offsetContent: CGFloat?
+    public var automaticOffset: (offset: CGFloat, value: Bool) = (-50, true)
+    public var scaleEffect: CGFloat? = 0.8
+    public var beforeShowBackgroundColor: Color?
+    public var afterShowBackgroundColor: Color?
+    public var overlayColor: Color?
+    public var opacityOverlayColor: CGFloat? = 0.4
+    public var animationBackgroundColor: Animation? = .easeOut(duration: 0.8)
+    public var hideAnimation: Animation? = .spring()
+    public var showAnimation: Animation? = .spring()
+}
 
 public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
     @ObservedObject var viewModel: OffsetContentViewModel
@@ -32,7 +56,7 @@ public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
         @ViewBuilder offsetContent: @escaping () -> OffsetContent) {
             self.mainContentOption = .withShow
             self.offsetContentOption = .without
-            self._viewModel = .init(initialValue: .init())
+            self._viewModel = .init(initialValue: .init(style: OffsetContentStyleDefault()))
             self.offsetContentWithoutParameters = offsetContent
             self.mainContentWithShowParameter = mainContent
             self.mainContentWithAllParameters = nil
@@ -40,6 +64,59 @@ public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
             self.offsetContentWithShowParameter = nil
             self.offsetContentWithOffsetParameter = nil
             self.style = OffsetContentStyleDefault()
+    }
+    
+    public func blurEffect(radius: CGFloat?) -> Self {
+        self.viewModel.style.blurEffect = radius
+        return self
+    }
+    
+    public func automaticOffset(_ value: Bool, offset: CGFloat? = nil) -> Self {
+        self.viewModel.style.automaticOffset = (offset ?? 50, value)
+        return self
+    }
+    
+    public func offsetMainContent(_ y: CGFloat?) -> Self {
+        self.viewModel.style.offsetContent = y
+        return self
+    }
+    public func mainContentScaleEffect(_ value: CGFloat?) -> Self {
+        self.viewModel.style.scaleEffect = value
+        return self
+    }
+    
+    public func overlayColor(_ color: Color?) -> Self {
+        self.viewModel.style.overlayColor = color
+        return self
+    }
+    
+    public func opacityOverlayColor(_ opacity: CGFloat?) -> Self {
+        self.viewModel.style.opacityOverlayColor = opacity
+        return self
+    }
+    
+    
+    public func beforeShowBackgroundColor(_ color: Color?) -> Self {
+        self.viewModel.style.beforeShowBackgroundColor = color
+        return self
+    }
+    
+    public func afterShowBackgroundColor(_ color: Color?) -> Self {
+        self.viewModel.style.afterShowBackgroundColor = color
+        return self
+    }
+    
+    public func animationBackgroundColor(_ animation: Animation? = .default) -> Self {
+        self.viewModel.style.animationBackgroundColor = animation
+        return self
+    }
+    public func hideAnimation(_ animation: Animation? = .default) -> Self {
+        self.viewModel.style.hideAnimation = animation
+        return self
+    }
+    public func showAnimation(_ animation: Animation? = .default) -> Self {
+        self.viewModel.style.showAnimation = animation
+        return self
     }
 }
 
@@ -49,7 +126,7 @@ extension OffsetContent {
     var show: Binding<Bool> {
         .init(get: { self.viewModel.showOffsetContent }) { value in
             viewModel.showOffsetContent = value
-            viewModel.render(.spring())
+            viewModel.render(viewModel.showAnimation)
         }
     }
     
@@ -75,14 +152,13 @@ extension OffsetContent {
                 .scaleEffect(viewModel.scaleEffect)
                 .blur(radius: viewModel.blur)
 
-                Color.black.opacity(viewModel.opacity)
+                self.viewModel.overlayColor.opacity(self.viewModel.opacity)
                     .onTapGesture {
-                        withAnimation(.spring()) {
-                            viewModel.showOffsetContent.toggle()
-                            viewModel.render(.spring())
-                        }
+                        //withAnimation(.spring()) {
+                            self.viewModel.showOffsetContent.toggle()
+                        self.viewModel.render(self.viewModel.hideAnimation)
+                        //}
                     }
-                
                 
                 
                 let currentOffset: CGFloat = {
@@ -157,9 +233,12 @@ extension OffsetContent {
         }
         .background(
             Group{
-                self.viewModel.showOffsetContent ? Color.black : Color.purple
+                self.viewModel.showOffsetContent ?
+                self.viewModel.afterShowBackgroundColor :
+                self.viewModel.beforeShowBackgroundColor
+               
             }
-            .animation(.easeOut(duration: 0.8), value: self.viewModel.showOffsetContent)
+            .animation(self.viewModel.animationBackgroundColor, value: self.viewModel.showOffsetContent)
         )
     }
 }
