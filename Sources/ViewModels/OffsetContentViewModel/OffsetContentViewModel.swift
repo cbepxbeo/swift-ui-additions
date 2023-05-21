@@ -10,7 +10,7 @@
  */
 
 import Foundation
-
+import SwiftUI
 
 internal final class OffsetContentViewModel: ObservableObject {
     internal var height: CGFloat = .zero
@@ -19,3 +19,21 @@ internal final class OffsetContentViewModel: ObservableObject {
     internal var offset: CGFloat = 0
 }
  
+
+extension OffsetContentViewModel {
+    
+    func changedGesture(value: DragGesture.Value){
+        let currentOffset = value.translation.height
+        if currentOffset < 0 {
+            return
+        }
+        if currentOffset > height - (height / 4)   {
+            self.offset = 0
+            self.showOffsetContent = false
+            self.render(.spring())
+            return
+        }
+        self.offset = currentOffset
+        self.render()
+    }
+}
