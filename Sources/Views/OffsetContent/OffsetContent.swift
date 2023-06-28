@@ -14,12 +14,12 @@ import SwiftUtilities
 
 public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
     internal init(
-        mainContentWithAllParameters: UniversalWrap<MainContentWithAllParameters>? = nil,
-        mainContentWithShowParameter: UniversalWrap<MainContentWithShowParameter>? = nil,
-        offsetContentWithAllParameters: UniversalWrap<OffsetContentWithAllParameters>? = nil,
-        offsetContentWithShowParameter: UniversalWrap<OffsetContentWithShowParameter>? = nil,
-        offsetContentWithOffsetParameter: UniversalWrap<OffsetContentWithOffsetParameter>? = nil,
-        offsetContentWithoutParameters: UniversalWrap<OffsetContentWithoutParameters>? = nil,
+        mainContentWithAllParameters: ValueWrapper<MainContentWithAllParameters>? = nil,
+        mainContentWithShowParameter: ValueWrapper<MainContentWithShowParameter>? = nil,
+        offsetContentWithAllParameters: ValueWrapper<OffsetContentWithAllParameters>? = nil,
+        offsetContentWithShowParameter: ValueWrapper<OffsetContentWithShowParameter>? = nil,
+        offsetContentWithOffsetParameter: ValueWrapper<OffsetContentWithOffsetParameter>? = nil,
+        offsetContentWithoutParameters: ValueWrapper<OffsetContentWithoutParameters>? = nil,
         mainContentOption:  Self.MainContentOption,
         offsetContentOption: Self.OffsetContentOption
     ){
