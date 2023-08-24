@@ -37,7 +37,6 @@ public struct OffsetContentDefaultStyle: OffsetContentStyle {
         self.hideAnimation = hideAnimation
         self.showAnimation = showAnimation
     }
-    
     internal init() {
         self.blurEffect = 3
         self.offsetContent = nil
@@ -51,7 +50,6 @@ public struct OffsetContentDefaultStyle: OffsetContentStyle {
         self.hideAnimation = .spring()
         self.showAnimation = .spring()
     }
-    
     public var blurEffect: CGFloat?
     public var offsetContent: CGFloat?
     public var automaticOffset: (offset: CGFloat, value: Bool)
