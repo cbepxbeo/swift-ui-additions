@@ -11,7 +11,8 @@ Status: #Complete | #Not decorated
 
 import SwiftUI
 
-public struct ForEachWithIndex<Collection: RandomAccessCollection, Content: View>: View where Collection.Element: Identifiable {
+public struct ForEachWithIndex<Collection: RandomAccessCollection, Content: View>: View
+where Collection.Element: Identifiable {
     public init(
         _ collection: Collection,
         @ViewBuilder content: @escaping (Collection.Index, Collection.Element) -> Content
@@ -29,9 +30,3 @@ public struct ForEachWithIndex<Collection: RandomAccessCollection, Content: View
         }
     }
 }
-
-
-
-
-
-import Foundation
