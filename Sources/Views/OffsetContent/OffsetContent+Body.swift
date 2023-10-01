@@ -1,13 +1,13 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContent+Body.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContent+Body.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed
+ 
+ */
 
 import SwiftUI
 

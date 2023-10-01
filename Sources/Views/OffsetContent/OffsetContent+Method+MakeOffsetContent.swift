@@ -1,18 +1,18 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContent+Method+MakeOffsetContent.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContent+Method+MakeOffsetContent.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed
+ 
+ */
 
 import SwiftUI
 
 extension OffsetContent {
-    internal func makeOffsetContent(offset: CGFloat) -> some View {
+    func makeOffsetContent(offset: CGFloat) -> some View {
         Group{
             switch self.offsetContentOption {
             case .all:

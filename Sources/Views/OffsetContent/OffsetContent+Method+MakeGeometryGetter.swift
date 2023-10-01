@@ -1,18 +1,18 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContent+Method+MakeGeometryGetter.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContent+Method+MakeGeometryGetter.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed
+ 
+ */
 
 import SwiftUI
 
 extension OffsetContent {
-    internal func makeGeometryGetter() -> some View {
+    func makeGeometryGetter() -> some View {
         Group{
             if !viewModel.isReady {
                 GeometryReader{ backgroudGeometry in

@@ -11,8 +11,8 @@ let package = Package(
             targets: ["SwiftUIAdditions"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/cbepxbeo/swift-ui-extensions.git", branch: "main"),
-        .package(url: "https://github.com/cbepxbeo/swift-utilities.git", branch: "main")
+        .package(url: "https://github.com/cbepxbeo/swift-ui-extensions.git", from: "0.0.2"),
+        .package(url: "https://github.com/cbepxbeo/swift-utilities.git", from: "0.0.4"),
     ],
     targets: [
         .target(
@@ -28,5 +28,5 @@ let package = Package(
             dependencies: ["SwiftUIAdditions"]
          ),
     ],
-    swiftLanguageVersions: [ .version("5.1") ]
+    swiftLanguageVersions: [ .version("5.9") ]
 )

@@ -1,13 +1,13 @@
 /*
-
-Project: SwiftUIAdditions
-File: ForEachWithIndex.swift
-Created by: Егор Бойко
-Date: 19.05.2023
-
-Status: #Complete | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: ForEachWithIndex.swift
+ Created by: Egor Boyko
+ Date: 19.05.2023
+ 
+ Status: #Complete | #Not decorated
+ 
+ */
 
 import SwiftUI
 

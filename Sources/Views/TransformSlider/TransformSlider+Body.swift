@@ -2,7 +2,7 @@
  
  Project: SwiftUIAdditions
  File: TransformSlider+Body.swift
- Created by: Егор Бойко
+ Created by: Egor Boyko
  Date: 20.05.2023
  
  Status: #In progress | #Not decorated

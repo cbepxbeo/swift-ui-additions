@@ -2,7 +2,7 @@
  
  Project: SwiftUIAdditions
  File: RoundedShape.swift
- Created by: Егор Бойко
+ Created by: Egor Boyko
  Date: 24.08.2023
  
  Status: #Complete | #Not decorated
@@ -13,9 +13,14 @@
 import SwiftUI
 
 public struct RoundedShape: View {
-    public init(style: Self.Style = .rectangle, color: Color = .black) {
+    public init(style: Self.Style = .rectangle) {
         self.style = style
-        self.color = color
+        self.color = .black
+    }
+    
+    public init(cornerRadius: CGFloat) {
+        self.style = .custom(cornerRadius)
+        self.color = .black
     }
     
     var style: Self.Style

@@ -1,25 +1,25 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContentViewModel+Properties+Computed.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContentViewModel+Properties+Computed.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed | #Not decorated
+ 
+ */
 
 import SwiftUI
- 
+
 extension OffsetContentViewModel {
-    internal var blur: CGFloat {
+    var blur: CGFloat {
         guard let blur = self.style.blurEffect else {
             return 0
         }
         return self.proportionFromCurrentOffset(max: blur)
     }
     
-    internal var opacity: CGFloat {
+    var opacity: CGFloat {
         guard let opacity = self.style.opacityOverlayColor else {
             return 0.001
         }
@@ -28,11 +28,11 @@ extension OffsetContentViewModel {
         )
     }
     
-    internal var degrees: CGFloat {
+    var degrees: CGFloat {
         self.proportionFromCurrentOffset(max: 15)
     }
     
-    internal var offsetContent: CGFloat {
+    var offsetContent: CGFloat {
         if self.style.automaticOffset.value {
             return self.proportionFromCurrentOffset(max: height + self.style.automaticOffset.offset)
         }
@@ -43,7 +43,7 @@ extension OffsetContentViewModel {
         return self.proportionFromCurrentOffset(max: offset)
     }
     
-    internal var scaleEffect: CGFloat {
+    var scaleEffect: CGFloat {
         guard let scaleEffect = self.style.scaleEffect, scaleEffect > 0 else {
             return 1
         }

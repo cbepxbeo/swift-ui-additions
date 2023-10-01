@@ -2,7 +2,7 @@
  
  Project: SwiftUIAdditions
  File: RoundedShape+Style.swift
- Created by: Егор Бойко
+ Created by: Egor Boyko
  Date: 24.08.2023
  
  Status: #Complete | #Not decorated
@@ -17,17 +17,20 @@ extension RoundedShape {
         case rectangle
         case dialog
         case button
+        case custom(CGFloat)
         
         var divisor: CGFloat {
             switch self {
             case .rectangle:
-                return 7.72
+                7.72
             case .button:
-                return 21.8
+                21.8
             case .square:
-                return 4.47
+                4.47
             case .dialog:
-                return 41.3
+                41.3
+            case .custom(let value):
+                value
             }
         }
     }

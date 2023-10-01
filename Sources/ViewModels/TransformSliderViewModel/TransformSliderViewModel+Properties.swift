@@ -1,18 +1,18 @@
 /*
-
-Project: SwiftUIAdditions
-File: TransformSliderViewModel+Properties.swift
-Created by: Егор Бойко
-Date: 20.05.2023
-
-Status: #In progress | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: TransformSliderViewModel+Properties.swift
+ Created by: Egor Boyko
+ Date: 20.05.2023
+ 
+ Status: #In progress | #Not decorated
+ 
+ */
 
 import Foundation
 
 extension TransformSliderViewModel {
-    internal var geometryWidth: CGFloat {
+    var geometryWidth: CGFloat {
         get {
             self._geometryWidth ?? 0
         }
@@ -23,15 +23,15 @@ extension TransformSliderViewModel {
         }
     }
     
-    internal var total: CGFloat {
+    var total: CGFloat {
         self.geometryWidth * self.current
     }
     
-    internal var difference: CGFloat {
+    var difference: CGFloat {
         self.total - self.offset
     }
     
-    internal var endPoint: CGFloat {
+    var endPoint: CGFloat {
         self.minimumDistance + 29
     }
 }
