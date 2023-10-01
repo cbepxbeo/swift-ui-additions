@@ -1,18 +1,18 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContent+Method+MakeMainContent.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContent+Method+MakeMainContent.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed
+ 
+ */
 
 import SwiftUI
 
 extension OffsetContent {
-    internal func makeMainContent() -> some View {
+    func makeMainContent() -> some View {
         ZStack{
             Color.clear
             switch self.mainContentOption {

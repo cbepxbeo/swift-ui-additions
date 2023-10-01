@@ -2,7 +2,7 @@
  
  Project: SwiftUIAdditions
  File: RoundedShape+Modifiers
- Created by: Егор Бойко
+ Created by: Egor Boyko
  Date: 24.08.2023
  
  Status: #Complete | #Not decorated

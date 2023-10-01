@@ -1,16 +1,16 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContentViewModel+Method+ProportionFromCurrentOffset.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContentViewModel+Method+ProportionFromCurrentOffset.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed | #Not decorated
+ 
+ */
 
 import SwiftUI
- 
+
 extension OffsetContentViewModel {
     func proportionFromCurrentOffset(max: CGFloat) -> CGFloat{
         

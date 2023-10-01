@@ -1,18 +1,18 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContentViewModel+Method+ChangedGesture.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContentViewModel+Method+ChangedGesture.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed | #Not decorated
+ 
+ */
 
 import SwiftUI
- 
+
 extension OffsetContentViewModel {
-    internal func changedGesture(value: DragGesture.Value){
+    func changedGesture(value: DragGesture.Value){
         let currentOffset = value.translation.height
         if currentOffset < 0 {
             return

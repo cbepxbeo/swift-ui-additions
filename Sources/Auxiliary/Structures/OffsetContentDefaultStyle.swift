@@ -1,13 +1,13 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContentDefaultStyle.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContentDefaultStyle.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed | #Not decorated
+ 
+ */
 
 import SwiftUI
 
@@ -37,7 +37,7 @@ public struct OffsetContentDefaultStyle: OffsetContentStyle {
         self.hideAnimation = hideAnimation
         self.showAnimation = showAnimation
     }
-    internal init() {
+    init() {
         self.blurEffect = 3
         self.offsetContent = nil
         self.automaticOffset = (-50, true)

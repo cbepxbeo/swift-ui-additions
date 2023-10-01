@@ -1,19 +1,19 @@
 /*
-
-Project: SwiftUIAdditions
-File: OffsetContent.swift
-Created by: Егор Бойко
-Date: 21.05.2023
-
-Status: #Completed | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: OffsetContent.swift
+ Created by: Egor Boyko
+ Date: 21.05.2023
+ 
+ Status: #Completed | #Not decorated
+ 
+ */
 
 import SwiftUI
 import SwiftUtilities
 
 public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
-    internal init(
+    init(
         mainContentWithAllParameters: ValueWrapper<MainContentWithAllParameters>? = nil,
         mainContentWithShowParameter: ValueWrapper<MainContentWithShowParameter>? = nil,
         offsetContentWithAllParameters: ValueWrapper<OffsetContentWithAllParameters>? = nil,
@@ -35,12 +35,12 @@ public struct OffsetContent<MainContent: View, OffsetContent: View>: View {
     }
     
     @ObservedObject var viewModel: OffsetContentViewModel
-    internal let mainContentWithAllParameters: MainContentWithAllParameters?
-    internal let mainContentWithShowParameter: MainContentWithShowParameter?
-    internal let offsetContentWithAllParameters: OffsetContentWithAllParameters?
-    internal let offsetContentWithShowParameter: OffsetContentWithShowParameter?
-    internal let offsetContentWithOffsetParameter: OffsetContentWithOffsetParameter?
-    internal let offsetContentWithoutParameters: OffsetContentWithoutParameters?
-    internal let mainContentOption: Self.MainContentOption
-    internal let offsetContentOption: Self.OffsetContentOption
+    let mainContentWithAllParameters: MainContentWithAllParameters?
+    let mainContentWithShowParameter: MainContentWithShowParameter?
+    let offsetContentWithAllParameters: OffsetContentWithAllParameters?
+    let offsetContentWithShowParameter: OffsetContentWithShowParameter?
+    let offsetContentWithOffsetParameter: OffsetContentWithOffsetParameter?
+    let offsetContentWithoutParameters: OffsetContentWithoutParameters?
+    let mainContentOption: Self.MainContentOption
+    let offsetContentOption: Self.OffsetContentOption
 }

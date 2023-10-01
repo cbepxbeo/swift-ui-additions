@@ -1,18 +1,18 @@
 /*
-
-Project: SwiftUIAdditions
-File: TransformSliderViewModel+Method+ChangedGesture.swift
-Created by: Егор Бойко
-Date: 20.05.2023
-
-Status: #In progress | #Not decorated
-
-*/
+ 
+ Project: SwiftUIAdditions
+ File: TransformSliderViewModel+Method+ChangedGesture.swift
+ Created by: Egor Boyko
+ Date: 20.05.2023
+ 
+ Status: #In progress | #Not decorated
+ 
+ */
 
 import SwiftUI
 
 extension TransformSliderViewModel {
-    internal func changedGesture(value: DragGesture.Value, count: Int){
+    func changedGesture(value: DragGesture.Value, count: Int){
         let currentOffset = value.translation.width
         let count: CGFloat = .init(count - 1)
         
@@ -43,7 +43,7 @@ extension TransformSliderViewModel {
                     x = (currentOffset + minimumDistance) * factor
                 }
                 self.offset = self.total - x - self.minimumDistance
-
+                
             } else {
                 self.offset = currentOffset + self.total
             }
