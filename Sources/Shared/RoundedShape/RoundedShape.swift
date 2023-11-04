@@ -26,10 +26,19 @@ public struct RoundedShape: View {
     var style: Self.Style
     var color: Color
     
+    func cornerRadius(size: CGSize) -> CGFloat {
+        switch self.style {
+        case .custom(let radius):
+            radius
+        default:
+            size.width / self.style.divisor
+        }
+    }
+    
     public var body: some View {
         GeometryReader{
             RoundedRectangle(
-                cornerRadius: $0.size.width / style.divisor,
+                cornerRadius: self.cornerRadius(size: $0.size),
                 style: .continuous
             )
             .fill(self.color)
